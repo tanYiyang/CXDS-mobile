@@ -52,7 +52,7 @@ export default function SignIn() {
 
     <ImageBackground
       source={require('@/assets/images/background.png')}
-      style={tw`bg-black flex-1`}
+      style={tw`bg-black w-full h-full`}
     >
       <View style={tw`flex-row items-center p-6 mt-6`}>
         <Image 

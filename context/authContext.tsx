@@ -31,6 +31,12 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const [loading, setLoading] = useState(false); // Manage loading state separately
 
   const signIn = async (email: string, password: string) => {
+    if (process.env.NODE_ENV === 'development') {
+      // Skip authentication in development mode
+      setSession('dummy-session-token');
+      return;
+    }
+
     try {
       setLoading(true); // Set loading state to true
 
@@ -63,6 +69,12 @@ export function SessionProvider({ children }: PropsWithChildren) {
   };
 
   const register = async (email: string, password: string) => {
+    if (process.env.NODE_ENV === 'development') {
+      // Skip authentication in development mode
+      setSession('dummy-session-token');
+      return;
+    }
+
     try {
       setLoading(true); // Set loading state to true
 
@@ -102,7 +114,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
         signIn,
         register,
         signOut,
-        session, // session is a string or null now
+        session: session || (process.env.NODE_ENV === 'development' ? 'dummy-session-token' : null),
         isLoading: loading, // Use local loading state
       }}
     >
