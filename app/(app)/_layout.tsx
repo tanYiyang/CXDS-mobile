@@ -3,6 +3,7 @@ import { Link, Redirect, Stack, usePathname } from 'expo-router';
 import tw from 'twrnc';
 import { useSession } from '@/context/authContext';
 
+
 export default function AppLayout() {
   const { session, isLoading } = useSession();
   const currentRoute = usePathname()
@@ -19,10 +20,12 @@ export default function AppLayout() {
     return <Redirect href="/sign-in" />;
   }
 
+  const isUserRoute = currentRoute.startsWith('/user');
 
   return (
     <Stack
       screenOptions={{
+        headerShown: !isUserRoute,
         headerStyle: { backgroundColor: 'black' },
         headerTintColor: '#fff',
         headerTitleAlign: 'left',
@@ -36,9 +39,12 @@ export default function AppLayout() {
               />
               <Text style={tw`text-3xl text-white ml-2`}>Peek</Text>
             </View>
-          ) : (<Text style={tw`text-3xl text-white`}>Peek</Text>)
+          ) : (<></>)
         ),
-        headerRight: () => (
+        // Conditionally render the headerLeft and headerRight based on the current route
+        headerRight: () => 
+          currentRoute !== '/user' ? 
+          (
           <View style={tw`flex-row pr-4`}>
             <Link href='/wishlist'>
               <View style={tw`h-6 w-6`}>
@@ -53,16 +59,16 @@ export default function AppLayout() {
             </Link>
 
 
-            <Link href='/wishlist' >
+            <Link href='/user' >
               <View style={tw`h-6 w-6`}>
                 <Image source={require('@/assets/images/profile.png')} style={tw`h-6 w-6`} resizeMode="contain" />
               </View>
             </Link>
           </View>
-        ),
+        ): null,
       }}
     >
-      <Stack.Screen name="(tabs)"/>
-      </Stack>
+      <Stack.Screen name="(tabs)" />
+    </Stack>
   )
 }
