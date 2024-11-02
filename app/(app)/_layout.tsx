@@ -21,11 +21,11 @@ export default function AppLayout() {
   }
 
   const isUserRoute = currentRoute.startsWith('/user');
-
+  const isTabRoute = ['/explore', '/profile', '/favorites', '/cart', '/payment', '/thankyou'].includes(currentRoute);
   return (
     <Stack
       screenOptions={{
-        headerShown: !isUserRoute,
+        headerShown: !isUserRoute && !isTabRoute,
         headerStyle: { backgroundColor: 'black' },
         headerTintColor: '#fff',
         headerTitleAlign: 'left',
@@ -43,6 +43,7 @@ export default function AppLayout() {
         ),
         // Conditionally render the headerLeft and headerRight based on the current route
         headerRight: () => 
+          
           currentRoute !== '/user' ? 
           (
           <View style={tw`flex-row pr-4`}>
