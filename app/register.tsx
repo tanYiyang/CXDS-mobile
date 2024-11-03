@@ -100,7 +100,7 @@ export default function Register() {
         style={tw`bg-white border border-gray-300 rounded-md p-2 mb-3`}
       />
       {errors.confirmPassword ? <Text style={tw`text-red-500 mb-4`}>{errors.confirmPassword}</Text> : null} 
-
+      <Text style={tw`text-white font-bold text-xs bottom-3 text-center mt-2`}>By continuing, you agree to the<Text style={tw`text-yellow-500`}> Terms of Use & Privacy Policy</Text></Text>
       
       <Pressable
         onPress={handleRegister}
