@@ -3,26 +3,21 @@ import { Link, Redirect, Stack, usePathname } from 'expo-router';
 import tw from 'twrnc';
 import { useSession } from '@/context/authContext';
 
-
 export default function AppLayout() {
   const { session, isLoading } = useSession();
-  const currentRoute = usePathname()
+  const currentRoute = usePathname();
 
-  // You can keep the splash screen open, or render a loading screen like we do here.
   if (isLoading) {
     return <Text>Loading...</Text>;
   }
-  // Only require authentication within the (app) group's layout as users
-  // need to be able to access the (auth) group and sign in again.
-  // !!! change to !session to bypass auth !!!
-  if (session) {
-    // On web, static rendering will stop here as the user is not authenticated
-    // in the headless Node process that the pages are rendered in.
+
+  if (!session) {
     return <Redirect href="/sign-in" />;
   }
 
   const isUserRoute = currentRoute.startsWith('/user');
   const isTabRoute = ['/explore', '/profile', '/favorites', '/cart', '/payment', '/thankyou'].includes(currentRoute);
+
   return (
     <Stack
       screenOptions={{
@@ -30,7 +25,7 @@ export default function AppLayout() {
         headerStyle: { backgroundColor: 'black' },
         headerTintColor: '#fff',
         headerTitleAlign: 'left',
-        headerTitle: () => (
+        headerTitle: () =>
           currentRoute === '/home' ? (
             <View style={tw`flex-row items-center`}>
               <Image
@@ -40,37 +35,59 @@ export default function AppLayout() {
               />
               <Text style={tw`text-3xl text-white ml-2`}>Peek</Text>
             </View>
-          ) : (<></>)
-        ),
-        // Conditionally render the headerLeft and headerRight based on the current route
-        headerRight: () => 
-          
-          currentRoute !== '/user' ? 
-          (
-          <View style={tw`flex-row pr-4`}>
-            <Link href='/wishlist'>
-              <View style={tw`h-6 w-6`}>
-                <Image source={require('@/assets/images/heart.png')} style={tw`h-6 w-6`} resizeMode="contain" />
-              </View>
-            </Link>
-
-            <Link href='/wishlist'>
-              <View style={tw`h-6 w-6`}>
-                <Image source={require('@/assets/images/bell.png')} style={tw`h-6 w-6`} resizeMode="contain" />
-              </View>
-            </Link>
-
-
-            <Link href='/user' >
-              <View style={tw`h-6 w-6`}>
-                <Image source={require('@/assets/images/profile.png')} style={tw`h-6 w-6`} resizeMode="contain" />
-              </View>
-            </Link>
-          </View>
-        ): null,
+          ) : <></>,
+        headerRight: () =>
+          currentRoute !== '/user' ? (
+            <View style={tw`flex-row pr-4`}>
+              <Link href='/wishlist'>
+                <View style={tw`h-6 w-6`}>
+                  <Image source={require('@/assets/images/heart.png')} style={tw`h-6 w-6`} resizeMode="contain" />
+                </View>
+              </Link>
+              <Link href='/wishlist'>
+                <View style={tw`h-6 w-6`}>
+                  <Image source={require('@/assets/images/bell.png')} style={tw`h-6 w-6`} resizeMode="contain" />
+                </View>
+              </Link>
+              <Link href='/user'>
+                <View style={tw`h-6 w-6`}>
+                  <Image source={require('@/assets/images/profile.png')} style={tw`h-6 w-6`} resizeMode="contain" />
+                </View>
+              </Link>
+            </View>
+          ) : null,
       }}
     >
       <Stack.Screen name="(tabs)" />
+      <Stack.Screen
+        name="wishlist"
+        options={{
+          title: 'Wishlist',
+          headerTitle: 'Wishlist',
+          // Custom headerRight for the Wishlist screen
+          headerRight: () => (
+            <Link href='/cart'>
+              <View style={tw`h-6 w-6`}>
+                <Image source={require('@/assets/images/cart.png')} style={tw`h-6 w-6`} resizeMode="contain" />
+              </View>
+            </Link>
+          ),
+        }}
+      />
+      <Stack.Screen 
+        name="product-details" 
+        options={{ 
+          title: 'product-details', 
+          // Custom headerRight for the Wishlist screen
+          headerRight: () => (
+            <Link href='/cart'>
+              <View style={tw`h-6 w-6`}>
+                <Image source={require('@/assets/images/cart.png')} style={tw`h-6 w-6`} resizeMode="contain" />
+              </View>
+            </Link>
+          ),
+        }}
+      />
     </Stack>
-  )
+  );
 }

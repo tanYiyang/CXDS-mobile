@@ -6,7 +6,7 @@ export default function ForgotPasswordScreen() {
   const [step, setStep] = useState(1); // Track current step in the process
   const [email, setEmail] = useState('');
   const [code, setCode] = useState(['', '', '', '', '', '']); // Array for each code digit
-  const inputs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)]; // Refs for each input
+  const inputs = [useRef<TextInput>(null), useRef<TextInput>(null), useRef<TextInput>(null), useRef<TextInput>(null), useRef<TextInput>(null), useRef<TextInput>(null)]; // Refs for each input
 
   // Mock function to send verification code (replace with actual API call)
   const handleSendVerification = () => {
@@ -17,14 +17,14 @@ export default function ForgotPasswordScreen() {
   };
 
   // Handle input for each verification code digit
-  const handleCodeChange = (value, index) => {
+  const handleCodeChange = (value: string, index: number) => {
     const newCode = [...code];
     newCode[index] = value;
     setCode(newCode);
 
     // Automatically focus the next input
     if (value && index < inputs.length - 1) {
-      inputs[index + 1].current.focus();
+      inputs[index + 1].current?.focus();
     }
   };
 

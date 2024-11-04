@@ -15,7 +15,6 @@ export default function TabsLayout() {
                 headerStyle: { backgroundColor: 'black' },
                 headerTintColor: '#fff',
                 headerTitleAlign: 'left',
-
             }}
         >
 
