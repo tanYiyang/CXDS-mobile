@@ -33,10 +33,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, price, originalPrice, i
           <Text style={tw`text-red-500 text-xs line-through`}>${originalPrice.toFixed(2)}</Text>
           </View>
 
-        {/* Add to Bag Button */}
-        <TouchableOpacity style={tw`bg-[#fef7e6] rounded-full p-0.5 px-2`}>
-          <Text style={tw`text-black text-center font-bold text-xs`}>ADD TO BAG</Text>
-        </TouchableOpacity>
 
         </View>
 

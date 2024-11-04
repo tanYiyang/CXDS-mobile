@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Image, Pressable, FlatList, Modal, ScrollView } from 'react-native';
 import tw from 'twrnc';
-import ProductCard from '@/components/ProductCard'; // Make sure this path is correct based on your file structure
+import WishlistProduct from '@/components/WishlistProduct'; // Make sure this path is correct based on your file structure
 import { router } from 'expo-router';
 import { Link } from 'expo-router';
 
@@ -107,7 +107,7 @@ export default function Wishlist() {
         columnWrapperStyle={tw`justify-between px-2`}
         renderItem={({ item }) => (
           
-          <ProductCard
+          <WishlistProduct
             name={item.name}
             price={item.price}
             originalPrice={item.originalPrice}
