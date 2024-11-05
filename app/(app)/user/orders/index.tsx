@@ -65,8 +65,8 @@ export default function Orders() {
   const OrderItem = ({ item }: { item: Order }) => (
     <View style={tw`flex-row bg-gray-900 p-4 m-2 mb-3 rounded-lg`}>
       <Image source={item.image} style={tw`h-20 w-20 rounded-md`} resizeMode="cover" />
-      <View style={tw`ml-4 flex-row`}>
-        <View style={tw`w-3/5`}>
+      <View style={tw`ml-4 flex-row flex-1`}>
+        <View style={tw`flex-1`}>
           <View style={tw`flex-row items-center`}>
             <Image source={require('@/assets/images/user/delivered.png')} style={tw`w-5 h-5 top-0.5`} resizeMode="contain" />
             <Text style={tw`text-white font-semibold`}>{item.status}</Text>
@@ -75,7 +75,7 @@ export default function Orders() {
           <Text style={tw`text-gray-400`}>{item.deliveryDate}</Text>
         </View>
         <View style={tw`items-center w-1/3`}>
-          <View style={tw`bg-purple-500 rounded-md w-16 py-0.5 items-center`}>
+          <View style={tw`bg-purple-500 rounded-md w-16 py-0.5 items-center flex-shrink`}>
             <Text style={tw`text-white text-xs`}>{item.username}</Text>
           </View>
           <View style={tw`mt-2 gap-2 left-0.5`}>
@@ -94,28 +94,34 @@ export default function Orders() {
   return (
     <View style={tw`w-full h-full bg-black`}>
       {/* Header */}
-      <View style={tw`flex-row mb-2`}>
-        <View style={tw`bg-[#fffff0] m-2 flex-row items-center border border-gray-300 rounded-lg h-10 w-76`}>
-          {!isFocused && searchQuery === '' && (
-            <Image source={require('@/assets/images/search.png')} style={tw`h-5 w-5 ml-4`} resizeMode="contain" />
-          )}
-          <TextInput
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            placeholder="Search"
-            placeholderTextColor="#A9A9A9"
-            style={tw`p-2 ml-2 text-base`}
-          />
-        </View>
-        <View style={tw`justify-center w-1/4`}>
-          <Pressable onPress={() => setFilterModalVisible(true)} style={tw`ml-3 p-2 bg-gray-700 rounded-lg h-10 items-center justify-center flex-row`}>
-            <Text style={tw`text-white`}>FILTER</Text>
-            <Image source={require('@/assets/images/filter.png')} style={tw`w-4 h-4 ml-2`} resizeMode="contain" />
-          </Pressable>
-        </View>
+      <View style={tw`flex-row mb-2 w-full px-2`}>
+      {/* Search Bar */}
+      <View style={tw`flex-1 flex-row items-center bg-[#fffff0] border border-gray-300 rounded-lg h-10 mr-2`}>
+        {!isFocused && searchQuery === '' && (
+          <Image source={require('@/assets/images/search.png')} style={tw`h-5 w-5 ml-4`} resizeMode="contain" />
+        )}
+        <TextInput
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          placeholder="Search"
+          placeholderTextColor="#A9A9A9"
+          style={tw`flex-1 p-2 ml-2 text-base`}
+        />
       </View>
+
+      {/* Filter Button */}
+      <View style={tw`justify-center`}>
+        <Pressable
+          onPress={() => setFilterModalVisible(true)}
+          style={tw`p-2 bg-gray-700 rounded-lg h-10 items-center justify-center flex-row`}
+        >
+          <Text style={tw`text-white text-sm`}>FILTER</Text>
+          <Image source={require('@/assets/images/filter.png')} style={tw`w-4 h-4 ml-1`} resizeMode="contain" />
+        </Pressable>
+      </View>
+    </View>
 
       {/* Selected Categories with Remove Option */}
       <View style={tw`flex-row flex-wrap mb-1 pl-2`}>

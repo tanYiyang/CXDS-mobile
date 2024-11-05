@@ -11,7 +11,7 @@ export default function TabsLayout() {
             screenOptions={{
                 tabBarStyle: { backgroundColor: 'black' },
                 tabBarShowLabel: false,
-                headerShown: currentRoute != '/home',
+                headerShown: currentRoute != '/home' && currentRoute !== '/outfits',
                 headerStyle: { backgroundColor: 'black' },
                 headerTintColor: '#fff',
                 headerTitleAlign: 'left',
@@ -36,9 +36,9 @@ export default function TabsLayout() {
             />
 
             <Tabs.Screen
-                name="profile"
+                name="outfits"
                 options={{
-                    title: "Profile",
+                    title: "Outfits",
                     tabBarIcon: () => (
                         <Image
                             source={require('@/assets/images/profile.png')}

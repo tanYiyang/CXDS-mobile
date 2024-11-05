@@ -1,11 +1,10 @@
-import { View, Text, Image, Pressable, ImageSourcePropType } from 'react-native';
+import { View, Text, Image, Pressable, ScrollView, ImageSourcePropType } from 'react-native';
 import tw from 'twrnc';
 import { Link } from 'expo-router';
 
 export default function UserDashboard() {
     return (
-        <View style={tw`w-full h-full bg-black px-6`}>
-
+        <ScrollView style={tw`bg-black`} contentContainerStyle={tw`px-6 pb-6`}>
             {/* Profile Section */}
             <View style={tw`border-b border-gray-500 pb-2`}>
                 <View style={tw`flex-row justify-between`}>
@@ -18,7 +17,7 @@ export default function UserDashboard() {
                             <Text style={tw`text-white text-2xl font-bold`}>Aneeket Das</Text>
                         </View>
                     </View>
-                    <View style={tw``}>
+                    <View>
                         <Pressable>
                             <Image source={require('@/assets/images/edit.png')} style={tw`h-5 w-5 right-4`} resizeMode="contain" />
                         </Pressable>
@@ -29,6 +28,7 @@ export default function UserDashboard() {
                     <Text style={tw`text-gray-400 text-xs`}>Swipe to swap accounts</Text>
                 </View>
             </View>
+
             {/* Options Grid */}
             <View style={tw`mt-4`}>
                 <View style={tw`items-center gap-4`}>
@@ -38,28 +38,27 @@ export default function UserDashboard() {
                     <DashboardButton imagename={require('@/assets/images/user/orders.png')} label="Orders" destination="/user/orders"/>
                     <DashboardButton imagename={require('@/assets/images/user/customersupport.png')} label="Customer Support" destination="/user/customersupport"/>
                     <DashboardButton imagename={require('@/assets/images/user/referrals.png')} label="Referrals" destination="/user/referrals"/>
-
                 </View>
             </View>
 
             {/* Footer Buttons */}
-            <View style={tw`absolute bottom-16 w-full items-center mx-7`}>
-                <View style={tw`flex-row gap-4`}>
+            <View style={tw`mt-10 items-center`}>
+                <View style={tw`flex-row flex-wrap justify-between w-full`}>
                     <FooterButton label="FAQ" />
                     <FooterButton label="Privacy" />
                     <FooterButton label="T&C" />
                     <FooterButton label="Write to us" />
                 </View>
                 <Image
-            source={require('@/assets/images/user/logo.png')}
-            style={tw`h-8 w-8 top-8`}
-            resizeMode="contain"
-          />
+                    source={require('@/assets/images/user/logo.png')}
+                    style={tw`h-8 w-8 mt-8`}
+                    resizeMode="contain"
+                />
             </View>
-            
-        </View>
+        </ScrollView>
     );
 }
+
 type DashboardButtonProps = {
     imagename: ImageSourcePropType;
     label: string;
@@ -89,7 +88,7 @@ function DashboardButton({ imagename, label, destination }: DashboardButtonProps
 // Footer Button Component
 function FooterButton({ label }: FooterButtonProps) {
     return (
-        <Pressable style={tw`bg-gray-900 p-5 py-2`}>
+        <Pressable style={tw`bg-gray-900 p-5 py-2 m-1`}>
             <Text style={tw`text-white text-xs font-semibold`}>{label}</Text>
         </Pressable>
     );

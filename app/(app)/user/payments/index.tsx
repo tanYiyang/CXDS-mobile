@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, Pressable, FlatList } from 'react-native';
+import { View, Text, Image, Pressable, ScrollView } from 'react-native';
 import tw from 'twrnc';
 
 // Sample Data
@@ -17,16 +17,15 @@ const cardData = [
 // Payment Methods Page Component
 export default function PaymentMethods() {
   return (
-
-    <View style={tw`w-full h-full bg-black p-5`}>
+    <ScrollView style={tw`bg-black`} contentContainerStyle={tw`p-5 pb-6`}>
       {/* UPI Section */}
       <Text style={tw`text-white text-lg font-semibold mb-3`}>UPI</Text>
       <View>
-      <FlatList
-        data={upiData}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={tw`flex-row items-center justify-between bg-gray-900 px-4 py-3 mb-2 rounded-lg`}>
+        {upiData.map((item) => (
+          <View
+            key={item.id}
+            style={tw`flex-row items-center justify-between bg-gray-900 px-4 py-3 mb-2 rounded-lg`}
+          >
             <View style={tw`flex-row items-center`}>
               <View style={tw`h-5 w-5 bg-pink-500 rounded-full mr-3`} />
               <Text style={tw`text-white`}>{item.upiId}</Text>
@@ -35,34 +34,25 @@ export default function PaymentMethods() {
               <Image source={require('@/assets/images/user/delete.png')} style={tw`h-5 w-5`} />
             </Pressable>
           </View>
-        )}
-      />
+        ))}
       </View>
 
-    <View style={tw`mt-5`}>
       {/* Cards Section */}
-      <Text style={tw`text-white text-lg font-semibold mb-3`}>Cards</Text>
-      
-      <FlatList
-        data={cardData}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={tw`bg-gray-900 p-4 mb-3 rounded-lg`}>
-
+      <View style={tw`mt-5`}>
+        <Text style={tw`text-white text-lg font-semibold mb-3`}>Cards</Text>
+        {cardData.map((item) => (
+          <View key={item.id} style={tw`bg-gray-900 p-4 mb-3 rounded-lg`}>
             <View style={tw`flex-row items-center justify-between`}>
-                
-            <View style={tw`flex-row items-center`}>
-            <Image source={require('@/assets/images/user/bank1.png')} style={tw`w-20 h-16 mr-2`} resizeMode='contain'/>
-            <View>
-            <Text style={tw`text-white font-semibold`}>
-                {item.type.toUpperCase()}
-              </Text>
+              <View style={tw`flex-row items-center`}>
+                <Image source={require('@/assets/images/user/bank1.png')} style={tw`w-20 h-16 mr-2`} resizeMode='contain' />
+                <View>
+                  <Text style={tw`text-white font-semibold`}>
+                    {item.type.toUpperCase()}
+                  </Text>
+                </View>
               </View>
-            </View>
-
               <Image source={require('@/assets/images/user/creditcard.png')} style={tw`h-4 w-8`} />
             </View>
-
             <Text style={tw`text-white text-lg font-semibold mt-2`}>{item.holder}</Text>
             <Text style={tw`text-gray-400 text-base`}>**** **** **** {item.lastDigits}</Text>
             <View style={tw`flex-row items-center justify-end mt-2`}>
@@ -72,25 +62,27 @@ export default function PaymentMethods() {
               </Pressable>
             </View>
           </View>
-        )}
-      />
-    </View>
-      {/* Add Button */}
-      <Pressable
-        onPress={() => console.log('Add new payment method')}
-        style={tw`bg-gray-300 h-12 w-1/3 rounded-full justify-center items-center self-center mt-5`}
-      >
-        <Text style={tw`text-black text-2xl`}>+</Text>
-      </Pressable>
-      
+        ))}
+      </View>
 
-      <View style={tw`absolute bottom-16 w-full items-center`}>
-      <Image
+      {/* Footer Buttons */}
+      <View style={tw`mt-10 items-center`}>
+        {/* Add Button */}
+        <Pressable
+          onPress={() => console.log('Add new payment method')}
+          style={tw`bg-gray-300 h-12 w-1/3 rounded-full justify-center items-center`}
+        >
+          <Text style={tw`text-black text-2xl`}>+</Text>
+        </Pressable>
+
+        <View style={tw`mt-10 items-center`}>
+          <Image
             source={require('@/assets/images/user/logo.png')}
-            style={tw`h-8 w-8 top-8 left-5`}
+            style={tw`h-8 w-8 mt-8`}
             resizeMode="contain"
           />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
