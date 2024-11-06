@@ -92,87 +92,92 @@ export default function Orders() {
   );
 
   return (
-    <View style={tw`w-full h-full bg-black`}>
-      {/* Header */}
-      <View style={tw`flex-row mb-2 w-full px-2`}>
-      {/* Search Bar */}
-      <View style={tw`flex-1 flex-row items-center bg-[#fffff0] border border-gray-300 rounded-lg h-10 mr-2`}>
-        {!isFocused && searchQuery === '' && (
-          <Image source={require('@/assets/images/search.png')} style={tw`h-5 w-5 ml-4`} resizeMode="contain" />
-        )}
-        <TextInput
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          placeholder="Search"
-          placeholderTextColor="#A9A9A9"
-          style={tw`flex-1 p-2 ml-2 text-base`}
-        />
-      </View>
-
-      {/* Filter Button */}
-      <View style={tw`justify-center`}>
-        <Pressable
-          onPress={() => setFilterModalVisible(true)}
-          style={tw`p-2 bg-gray-700 rounded-lg h-10 items-center justify-center flex-row`}
-        >
-          <Text style={tw`text-white text-sm`}>FILTER</Text>
-          <Image source={require('@/assets/images/filter.png')} style={tw`w-4 h-4 ml-1`} resizeMode="contain" />
-        </Pressable>
-      </View>
-    </View>
-
-      {/* Selected Categories with Remove Option */}
-      <View style={tw`flex-row flex-wrap mb-1 pl-2`}>
-        {selectedCategories.map((category) => (
-          <View key={category} style={tw`flex-row items-center bg-gray-800 px-3 py-1 rounded-full mr-2 mb-2`}>
-            <Text style={tw`text-white mr-2`}>{category}</Text>
-            <Pressable onPress={() => removeCategory(category)}>
-              <Text style={tw`text-white font-bold`}>×</Text>
-            </Pressable>
+    <View style={tw`flex-1 bg-black`}>
+      <ScrollView contentContainerStyle={tw`flex-grow pb-6`}>
+        {/* Header */}
+        <View style={tw`flex-row mb-2 w-full px-2`}>
+          {/* Search Bar */}
+          <View style={tw`flex-1 flex-row items-center bg-[#fffff0] border border-gray-300 rounded-lg h-10 mr-2`}>
+            {!isFocused && searchQuery === '' && (
+              <Image source={require('@/assets/images/search.png')} style={tw`h-5 w-5 ml-4`} resizeMode="contain" />
+            )}
+            <TextInput
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              placeholder="Search"
+              placeholderTextColor="#A9A9A9"
+              style={tw`flex-1 p-2 ml-2 text-base`}
+            />
           </View>
-        ))}
-      </View>
 
-      {/* Orders List */}
-      <FlatList
-        data={ordersData.filter((order) => selectedCategories.length === 0 || selectedCategories.includes(order.category))}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <OrderItem item={item} />}
-      />
-
-      {/* Filter Modal */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isFilterModalVisible}
-        onRequestClose={() => setFilterModalVisible(false)}
-      >
-        <View style={tw`flex-1 justify-center items-center bg-black bg-opacity-75`}>
-          <View style={tw`bg-gray-800 p-5 rounded-lg w-3/4`}>
-            <Text style={tw`text-white text-lg font-bold mb-3`}>Select Categories</Text>
-            <ScrollView style={tw`mb-5`}>
-              {categories.map((category) => (
-                <Pressable key={category} onPress={() => toggleCategory(category)} style={tw`flex-row items-center mb-2`}>
-                  <View style={tw`w-5 h-5 rounded-full mr-3 ${selectedCategories.includes(category) ? 'bg-purple-500' : 'bg-gray-700'}`} />
-                  <Text style={tw`text-white`}>{category}</Text>
-                </Pressable>
-              ))}
-            </ScrollView>
-            <Pressable onPress={() => setFilterModalVisible(false)} style={tw`bg-purple-500 py-2 rounded-md`}>
-              <Text style={tw`text-center text-white`}>Apply Filters</Text>
+          {/* Filter Button */}
+          <View style={tw`justify-center`}>
+            <Pressable
+              onPress={() => setFilterModalVisible(true)}
+              style={tw`p-2 bg-gray-700 rounded-lg h-10 items-center justify-center flex-row`}
+            >
+              <Text style={tw`text-white text-sm`}>FILTER</Text>
+              <Image source={require('@/assets/images/filter.png')} style={tw`w-4 h-4 ml-1`} resizeMode="contain" />
             </Pressable>
           </View>
         </View>
-      </Modal>
-      <View style={tw`absolute bottom-16 w-full items-center`}>
-      <Image
-            source={require('@/assets/images/user/logo.png')}
-            style={tw`h-8 w-8 top-8`}
-            resizeMode="contain"
-          />
+
+        {/* Selected Categories with Remove Option */}
+        <View style={tw`flex-row flex-wrap mb-1 pl-2`}>
+          {selectedCategories.map((category) => (
+            <View key={category} style={tw`flex-row items-center bg-gray-800 px-3 py-1 rounded-full mr-2 mb-2`}>
+              <Text style={tw`text-white mr-2`}>{category}</Text>
+              <Pressable onPress={() => removeCategory(category)}>
+                <Text style={tw`text-white font-bold`}>×</Text>
+              </Pressable>
+            </View>
+          ))}
+        </View>
+
+        {/* Orders List */}
+        <FlatList
+          data={ordersData.filter((order) => selectedCategories.length === 0 || selectedCategories.includes(order.category))}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <OrderItem item={item} />}
+          scrollEnabled={false} // Disable FlatList's scrolling since we use ScrollView
+        />
+
+        {/* Filter Modal */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isFilterModalVisible}
+          onRequestClose={() => setFilterModalVisible(false)}
+        >
+          <View style={tw`flex-1 justify-center items-center bg-black bg-opacity-75`}>
+            <View style={tw`bg-gray-800 p-5 rounded-lg w-3/4`}>
+              <Text style={tw`text-white text-lg font-bold mb-3`}>Select Categories</Text>
+              <ScrollView style={tw`mb-5`}>
+                {categories.map((category) => (
+                  <Pressable key={category} onPress={() => toggleCategory(category)} style={tw`flex-row items-center mb-2`}>
+                    <View style={tw`w-5 h-5 rounded-full mr-3 ${selectedCategories.includes(category) ? 'bg-purple-500' : 'bg-gray-700'}`} />
+                    <Text style={tw`text-white`}>{category}</Text>
+                  </Pressable>
+                ))}
+              </ScrollView>
+              <Pressable onPress={() => setFilterModalVisible(false)} style={tw`bg-purple-500 py-2 rounded-md`}>
+                <Text style={tw`text-center text-white`}>Apply Filters</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+        <View style={tw`mt-2 items-center`}>
+        <Image
+          source={require('@/assets/images/user/logo.png')}
+          style={tw`h-8 w-8 mt-8`}
+          resizeMode="contain"
+        />
       </View>
+      </ScrollView>
+
+
     </View>
   );
 }

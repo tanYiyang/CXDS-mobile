@@ -1,6 +1,8 @@
-import { View, Text, Image, Pressable, ScrollView, ImageSourcePropType } from 'react-native';
+import { View, Text, Image, Pressable, ScrollView, ImageSourcePropType, Dimensions } from 'react-native';
 import tw from 'twrnc';
 import { Link } from 'expo-router';
+
+const screenWidth = Dimensions.get('window').width;
 
 export default function UserDashboard() {
     return (
@@ -43,7 +45,7 @@ export default function UserDashboard() {
 
             {/* Footer Buttons */}
             <View style={tw`mt-10 items-center`}>
-                <View style={tw`flex-row flex-wrap justify-between w-full`}>
+                <View style={tw`flex-row flex-wrap justify-between w-full gap-2`}>
                     <FooterButton label="FAQ" />
                     <FooterButton label="Privacy" />
                     <FooterButton label="T&C" />
@@ -87,9 +89,12 @@ function DashboardButton({ imagename, label, destination }: DashboardButtonProps
 
 // Footer Button Component
 function FooterButton({ label }: FooterButtonProps) {
+    const buttonWidth = screenWidth > 360 ? '20%' : '40%'; // Adjust based on screen width
+    const fontSize = screenWidth > 360 ? 10 : 12; // Smaller font size for smaller screens
+
     return (
-        <Pressable style={tw`bg-gray-900 p-5 py-2 m-1`}>
-            <Text style={tw`text-white text-xs font-semibold`}>{label}</Text>
+        <Pressable style={[tw`bg-gray-900 p-2 m-1 rounded-lg items-center`, { width: buttonWidth }]}>
+            <Text style={[tw`text-white font-semibold`, { fontSize }]}>{label}</Text>
         </Pressable>
     );
 }
