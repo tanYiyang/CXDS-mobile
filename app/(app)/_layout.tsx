@@ -11,7 +11,8 @@ export default function AppLayout() {
     return <Text>Loading...</Text>;
   }
 
-  if (!session) {
+  /* invert session to turn off/on auth */
+  if (session) {
     return <Redirect href="/sign-in" />;
   }
 

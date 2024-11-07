@@ -71,35 +71,43 @@ export default function Register() {
       </View>
       <View style={tw`flex-1 justify-center p-6`}>
       <Text style={tw`text-6xl mb-6 text-white font-bold`}>SIGN UP</Text>
+
+      <View style={tw`mb-3`}>
       <TextInput
         placeholder="Email"
         placeholderTextColor={'gray'}
         value={email}
         onChangeText={setEmail}
-        style={tw`bg-white border border-gray-300 rounded-md p-2 mb-3`}
+        style={tw`bg-white border border-gray-300 rounded-md p-2 `}
         autoCapitalize="none"
       />
       {errors.email ? <Text style={tw`text-red-500 mb-2`}>{errors.email}</Text> : null} 
+      </View>
 
+      <View style={tw`mb-3`}>
       <TextInput
         placeholder="Password"
         placeholderTextColor={'gray'}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={tw`bg-white border border-gray-300 rounded-md p-2 mb-3`}
+        style={tw`bg-white border border-gray-300 rounded-md p-2 `}
       />
       {errors.password ? <Text style={tw`text-red-500 mb-2`}>{errors.password}</Text> : null} 
+      </View>
 
+      <View style={tw`mb-3`}>
       <TextInput
         placeholder="Confirm Password"
         placeholderTextColor={'gray'}
         value={confirmPassword}
         onChangeText={setConfirmPassword}
         secureTextEntry
-        style={tw`bg-white border border-gray-300 rounded-md p-2 mb-3`}
+        style={tw`bg-white border border-gray-300 rounded-md p-2 `}
       />
       {errors.confirmPassword ? <Text style={tw`text-red-500 mb-4`}>{errors.confirmPassword}</Text> : null} 
+      </View>
+
       <Text style={tw`text-white font-bold text-xs bottom-3 text-center mt-2`}>By continuing, you agree to the<Text style={tw`text-yellow-500`}> Terms of Use & Privacy Policy</Text></Text>
       
       <Pressable

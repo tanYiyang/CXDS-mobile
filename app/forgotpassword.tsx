@@ -42,7 +42,7 @@ export default function ForgotPasswordScreen() {
       source={require('@/assets/images/background.png')}
       style={tw`bg-black w-full h-full`}
     >
-      <View style={tw`flex-row items-center p-6 mt-6`}>
+      <View style={tw`flex-row items-center p-6`}>
         <Image 
           source={require('@/assets/images/logo.png')} 
           style={tw`h-12 w-12 mr-2`} // Adjust size as needed
@@ -80,7 +80,7 @@ export default function ForgotPasswordScreen() {
                 <TextInput
                   key={index}
                   ref={inputs[index]}
-                  style={tw`border-b border-white text-white text-lg text-center mx-2 w-12 h-12 rounded`}
+                  style={tw`border-b border-white text-white text-lg text-center mx-2 w-10 h-6 rounded`}
                   maxLength={1}
                   keyboardType="numeric"
                   value={digit}

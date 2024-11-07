@@ -38,54 +38,56 @@ export default function SignIn() {
     }
 
     try {
-      
       await signIn(email, password);
-      
       router.replace('/');
     } catch (error) {
-      
       Alert.alert('Sign In Failed', 'Invalid email or password. Please try again.');
     }
   };
 
   return (
-
     <ImageBackground
       source={require('@/assets/images/background.png')}
       style={tw`bg-black w-full h-full`}
     >
-      <View style={tw`flex-row items-center p-6 mt-6`}>
+      {/* Header with logo */}
+      <View style={tw`flex-row items-center p-6`}>
         <Image 
           source={require('@/assets/images/logo.png')} 
-          style={tw`h-12 w-12 mr-2`} // Adjust size as needed
-          resizeMode="contain" // Maintain aspect ratio
+          style={tw`h-12 w-12 mr-2`} 
+          resizeMode="contain" 
         />
         <Text style={tw`mt-3 text-6xl text-white font-bold`}>Peek</Text>
       </View>
+
+      {/* Main Content */}
       <View style={tw`flex-1 justify-center p-6`}>
         <Text style={tw`text-6xl mb-6 text-white font-bold`}>SIGN IN</Text>
 
+        <View style={tw`mb-3`}>
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor={'gray'}
+            value={email}
+            onChangeText={setEmail}
+            style={tw`bg-white border border-gray-300 rounded-md p-2`}
+            autoCapitalize="none"
+          />
+          {errors.email && <Text style={tw`text-red-500`}>{errors.email}</Text>}
+        </View>
 
-        <TextInput
-          placeholder="Email"
-          placeholderTextColor={'gray'}
-          value={email}
-          onChangeText={setEmail}
-          style={tw`bg-white border border-gray-300 rounded-md p-2 mb-3`}
-          autoCapitalize="none"
-        />
-        {errors.email && <Text style={tw`text-red-500 mb-2`}>{errors.email}</Text>}
-
-
-        <TextInput
-          placeholder="Password"
-          placeholderTextColor={'gray'}
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          style={tw`bg-white border border-gray-300 rounded-md p-2 mb-6`}
-        />
-        {errors.password && <Text style={tw`text-red-500`}>{errors.password}</Text>}
+        <View style={tw`mb-4`}>
+          <TextInput
+            placeholder="Password"
+            placeholderTextColor={'gray'}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            style={tw`bg-white border border-gray-300 rounded-md p-2`}
+          />
+          {errors.password && <Text style={tw`text-red-500`}>{errors.password}</Text>}
+        </View>
+        
         <Pressable onPress={() => router.push('/forgotpassword')} style={tw`items-end`}>
           <Text style={tw`text-white font-bold text-xs bottom-3`}>Forgot Password</Text>
         </Pressable>
@@ -93,7 +95,7 @@ export default function SignIn() {
         <Pressable
           onPress={handleSignIn}
           style={({ pressed }) => [
-            tw`bg-[#fffff0] rounded-md p-3`,
+            tw`bg-[#fffff0] rounded-md p-3 mt-4`,
             pressed ? tw`bg-yellow-100` : null,
           ]}
           disabled={isLoading}
@@ -107,38 +109,39 @@ export default function SignIn() {
 
         {isLoading && <Text style={tw`mt-4 text-center`}>Signing In...</Text>}
 
+        <View style={tw`flex-row items-center w-full px-8 mt-8 mb-4`}>
+          <View style={tw`flex-1 h-px bg-gray-300`} />
+          <Text style={tw`px-4 text-white text-sm`}>Or continue with</Text>
+          <View style={tw`flex-1 h-px bg-gray-300`} />
+        </View>
 
-
-
-        <View style={tw`flex-row items-center w-full px-8 mb-4 top-10`}>
-        <View style={tw`flex-1 h-px bg-gray-300`} />
-        <Text style={tw`px-4 text-white text-sm`}>Or continue with</Text>
-        <View style={tw`flex-1 h-px bg-gray-300`} />
+        <View style={tw`flex-row justify-center w-full`}>
+          <Pressable style={tw`p-4 mx-2`}>
+            <Image
+              source={require('@/assets/images/google.png')} 
+              style={tw`w-8 h-8`}
+              resizeMode="contain"
+            />
+          </Pressable>
+          
+          <Pressable style={tw`p-4 mx-2`}>
+            <Image
+              source={require('@/assets/images/x.png')} 
+              style={tw`w-8 h-8`}
+              resizeMode="contain"
+            />
+          </Pressable>
+        </View>
       </View>
 
-      <View style={tw`flex-row justify-center w-full top-10`}>
-        <Pressable style={tw`p-4 mx-2`}>
-          <Image
-            source={require('@/assets/images/google.png')} 
-            style={tw`w-8 h-8`}
-            resizeMode="contain"
-          />
-        </Pressable>
-        
-        <Pressable style={tw`p-4 mx-2`}>
-          <Image
-            source={require('@/assets/images/x.png')} 
-            style={tw`w-8 h-8`}
-            resizeMode="contain"
-          />
+      {/* Footer with Register now */}
+      <View style={tw`mb-6`}>
+        <Pressable onPress={() => router.push('/register')}>
+          <Text style={tw`text-white text-center`}>
+            Don't have an account? <Text style={tw`text-blue-400`}>Register now</Text>
+          </Text>
         </Pressable>
       </View>
-      <Pressable onPress={() => router.push('/register')}>
-          <Text style={tw`text-white text-center top-40`}>Don't have an account?<Text style={tw`text-blue-400`}>  Register now</Text></Text>
-        </Pressable>
-
-      </View>
-
     </ImageBackground>
   );
 }
